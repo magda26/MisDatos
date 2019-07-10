@@ -9,7 +9,7 @@ function doQuery(query, params) {
         var connection = mysql.createConnection({
             host: 'localhost',
             user: 'root',
-            password: 'ffxyuna',
+            password: 'admin',
             database: 'magdam'
         });
 
@@ -33,7 +33,7 @@ app.post('/login', function (req, res) {
 
     doQuery('SELECT count(*) as count FROM user WHERE email = ?', [req.body.email]).then(results => {
         if (results[0].count != 0) {
-            doQuery('SELECT count(*) as count FROM user WHERE email = ? AND password = ?', 
+            doQuery('SELECT count(*) as count FROM user WHERE email = ? AND password = ?',
                     [req.body.email,md5(req.body.password)] ).then(results => {
                         if(results[0].count!=0){
                             res.json({email:req.body.email});

@@ -9,7 +9,7 @@ function doQuery(query, params) {
         var connection = mysql.createConnection({
             host: 'localhost',
             user: 'root',
-            password: 'ffxyuna',
+            password: 'admin',
             database: 'magdam'
         });
 
@@ -44,7 +44,7 @@ app.post('/register', function (req, res) {
             doQuery('INSERT INTO user (user_id, created_date, name, lastname,birth_date,email,password)' +
                 'VALUES (?,?,?,?,?,?,?)', data).then(results => {
                     res.json({user_id: md5(req.body.email)});
-                });
+                })
         } else {
             res.json({ error: 'email' });
         }
