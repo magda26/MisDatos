@@ -40,18 +40,13 @@ app.get('/history', function (req, res) {
 
 /**
  * GET
- * http://localhost:1234/historyByUser/{user_id}
- * 
- * With body data in Json like: 
- * {
- *  "user_id":"{user_id}"
- * }
+ * http://localhost:1234/history/{user_id}
  * 
  */
 app.get('/history/:user_id', function (req, res) {
 
     doQuery('SELECT * FROM transaction WHERE user_id = ? ORDER BY created_date DESC ',[req.params.user_id]).then(results => {
-        res.json(results);
+        res.status(200).json(results);
     });
 });
 

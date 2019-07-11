@@ -39,7 +39,7 @@ app.use(express.json());
 app.post('/deactivateTransaction', function (req, res) {
     var transaction_id = req.body.id;
     doQuery('UPDATE transaction SET status = \'0\' WHERE transaction_id = ?', [transaction_id]).then(results => {
-                    res.json({transaction_id: req.body.id});
+                    res.status(200).json({transaction_id: req.body.id});
                 })
 });
 

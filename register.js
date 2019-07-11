@@ -56,10 +56,10 @@ app.post('/register', function (req, res) {
             data.push(md5(req.body.password));
             doQuery('INSERT INTO user (user_id, created_date, name, lastname,birth_date,email,password)' +
                 'VALUES (?,?,?,?,?,?,?)', data).then(results => {
-                    res.json({user_id: md5(req.body.email)});
+                    res.status(200).json({user_id: md5(req.body.email)});
                 })
         } else {
-            res.json({ error: 'email' });
+            res.status(409).json({ error: 'email is already taken' });
         }
     });
 });

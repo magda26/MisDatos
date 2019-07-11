@@ -23,7 +23,6 @@ function doQuery(query, params) {
     });
 }
 
-
 app.use(express.json());
 
 /**
@@ -47,7 +46,7 @@ app.post('/transaction', function (req, res) {
     data.push('1');
     doQuery('INSERT INTO transaction (created_date, value, points,user_id,status)' +
                 'VALUES (?,?,?,?,?)', data).then(results => {
-                    res.json({transaction_value: req.body.value});
+                    res.status(200).json({transaction_value: req.body.value});
                 })
 });
 

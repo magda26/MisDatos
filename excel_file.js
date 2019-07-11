@@ -97,7 +97,7 @@ app.get('/excel', function (req, res) {
         var fileName = 'Excel.xlsx';
         wb.write(fileName);
 
-        res.sendFile( __dirname + '\\'+fileName, function (err) {
+        res.status(200).sendFile( __dirname + '\\'+fileName, function (err) {
             if (err) {
                 console.log(err)
             } else {
