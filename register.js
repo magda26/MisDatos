@@ -29,6 +29,19 @@ function doQuery(query, params) {
 
 app.use(express.json());
 
+/**
+ * POST
+ * http://localhost:1232/register 
+ * 
+ * With body data in Json like: 
+ * {
+ *  "name":"{name}",
+ *  "lastname":"{lastname}",
+ *  "birth_date":"{birth_date}",
+ *  "email":"{email}",
+ *  "password":"{password}",
+ * }
+ */
 app.post('/register', function (req, res) {
 
     doQuery('SELECT count(*) as count FROM user WHERE email = ?', [req.body.email]).then(results => {

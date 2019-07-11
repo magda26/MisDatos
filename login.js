@@ -1,6 +1,7 @@
 const express = require('express');
 const md5 = require('md5');
 const mysql = require('mysql');
+const jwt = require('jsonwebtoken')
 
 const app = express();
 
@@ -21,7 +22,6 @@ function doQuery(query, params) {
             }
             resolve(results);
         });
-
         connection.end();
     });
 }
@@ -29,6 +29,17 @@ function doQuery(query, params) {
 
 app.use(express.json());
 
+/**
+ * POST
+ * http://localhost:1233/login 
+ * 
+ * With body data in Json like: 
+ * {
+ *  "email":"{email}",
+ *  "password":"{password}",
+ * }
+ * 
+ */
 app.post('/login', function (req, res) {
 
     doQuery('SELECT count(*) as count FROM user WHERE email = ?', [req.body.email]).then(results => {
@@ -36,13 +47,21 @@ app.post('/login', function (req, res) {
             doQuery('SELECT count(*) as count FROM user WHERE email = ? AND password = ?',
                     [req.body.email,md5(req.body.password)] ).then(results => {
                         if(results[0].count!=0){
-                            res.json({email:req.body.email});
+                            var tokenData = {
+                                username: req.body.email,
+                                username: req.body.password
+                              }
+                              var token = jwt.sign(tokenData, 'Secret Password', {
+                                 expiresIn: 60 * 60 * 24 
+                              })
+                             
+                              res.status(200).send({token})
                         }else{
-                            res.json({error:'password'});
+                            res.status(401).json({error:'invalid password'});
                         }
                 });
         } else {
-            res.json({ error: 'email' });
+            res.status(401).json({ error: 'invalid email' });
         }
     });
 });

@@ -26,6 +26,18 @@ function doQuery(query, params) {
 
 app.use(express.json());
 
+/**
+ * POST
+ * http://localhost:1236/transaction 
+ * 
+ * With body data in Json like: 
+ * {
+ *  "value":"{value}",
+ *  "points":"{points}",
+ *  "user_id":"{user_id}"
+ * }
+ * 
+ */
 app.post('/transaction', function (req, res) {
     var data = [];
     data.push(new Date());

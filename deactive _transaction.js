@@ -26,9 +26,19 @@ function doQuery(query, params) {
 
 app.use(express.json());
 
+/**
+ * POST
+ * http://localhost:1237/deactivateTransaction 
+ * 
+ * With body data in Json like: 
+ * {
+ *  "transaction_id":"{transaction_id}"
+ * }
+ * 
+ */
 app.post('/deactivateTransaction', function (req, res) {
     var transaction_id = req.body.id;
-    doQuery('UPDATE transaction SET status = \'0\' WHERE transaction_id = ?', transaction_id).then(results => {
+    doQuery('UPDATE transaction SET status = \'0\' WHERE transaction_id = ?', [transaction_id]).then(results => {
                     res.json({transaction_id: req.body.id});
                 })
 });

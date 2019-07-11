@@ -25,7 +25,11 @@ function doQuery(query, params) {
         connection.end();
     });
 }
-
+/**
+ * GET
+ * http://localhost:1238/excel 
+ * 
+ */
 app.get('/excel', function (req, res) {
 
     doQuery('SELECT * FROM transaction ').then(results => {

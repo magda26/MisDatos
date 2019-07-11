@@ -26,6 +26,11 @@ function doQuery(query, params) {
 
 app.use(express.json());
 
+/**
+ * GET
+ * http://localhost:1235/points 
+ * 
+ */
 app.get('/points', function (req, res) {
 
     doQuery('SELECT  user_id AS user , SUM(points) AS transaction_points FROM transaction WHERE status = 1 GROUP BY user_id  ').then(results => {
